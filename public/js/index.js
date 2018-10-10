@@ -9,8 +9,8 @@ socket.on("disconnect", function() {
 });
 
 socket.on("newMessage", function(message) {
-  console.log("Server sent new message", message);
   var li = document.createElement("li");
+  li.className = "collection-item";
   var liText = document.createTextNode(message.from + ": " + message.text);
   li.appendChild(liText);
 

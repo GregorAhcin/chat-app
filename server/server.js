@@ -27,7 +27,6 @@ io.on("connection", socket => {
   );
 
   socket.on("newMessage", (message, callback) => {
-    console.log("New message created", message);
     io.emit("newMessage", generateMessage(message.from, message.text));
 
     callback({ success: true, message: "Got message." });
