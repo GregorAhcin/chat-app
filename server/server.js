@@ -30,7 +30,7 @@ io.on("connection", socket => {
     console.log("New message created", message);
     io.emit("newMessage", generateMessage(message.from, message.text));
 
-    callback();
+    callback({ success: true, message: "Got message." });
     // socket.broadcast.emit("newMessage", {
     //   // Posljes vsem razen sebi
     //   from: message.from,
