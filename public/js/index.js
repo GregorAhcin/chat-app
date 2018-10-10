@@ -11,3 +11,7 @@ socket.on("disconnect", function() {
 socket.on("newMessage", function(message) {
   console.log("Server sent new message", message);
 });
+
+socket.emit("newMessage", { from: "Browser", text: "Test text" }, function() {
+  console.log("Got it.");
+});
