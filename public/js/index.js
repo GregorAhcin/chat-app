@@ -32,3 +32,27 @@ form.addEventListener("submit", function(e) {
     }
   );
 });
+
+var locationButton = document.getElementById("send-location");
+locationButton.addEventListener("click", function() {
+  if (!navigator.geolocation) {
+    return alert("Location not supported in this browser.");
+  }
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      socket.emit(
+        "sendLocation",
+        {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        },
+        function() {
+          console.log("success send location");
+        }
+      );
+    },
+    function(error) {
+      alert("We cant get location data.");
+    }
+  );
+});

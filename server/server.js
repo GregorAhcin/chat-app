@@ -38,6 +38,13 @@ io.on("connection", socket => {
     // });
   });
 
+  socket.on("sendLocation", (coords, callback) => {
+    io.emit("newMessage", {
+      from: "Admin",
+      text: `${coords.latitude} ${coords.longitude}`
+    });
+  });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
