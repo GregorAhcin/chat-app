@@ -17,6 +17,20 @@ socket.on("newMessage", function(message) {
   document.getElementById("messages").appendChild(li);
 });
 
+socket.on("newLocationMessage", function(message) {
+  var li = document.createElement("li");
+  li.className = "collection-item grey lighten-3";
+  var a = document.createElement("a");
+  a.href = message.url;
+  a.target = "_blank";
+  var aText = document.createTextNode("Link to my location.");
+  var liText = document.createTextNode(message.from + ": ");
+  li.appendChild(liText);
+  a.appendChild(aText);
+  li.appendChild(a);
+  document.getElementById("messages").appendChild(li);
+});
+
 var form = document.getElementById("message-form");
 form.addEventListener("submit", function(e) {
   e.preventDefault();
