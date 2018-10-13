@@ -6,25 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <title>Chat app</title>
 </head>
 
-<body>
-  <h1>Welcome to chat app</h1>
-  <ul class="collection" id="messages"></ul>
-  <div class="row">
-    <form id="message-form">
-      <div class="input-fild col s6">
-        <label for="message-text">New message:</label>
-        <input type="text" name="message-text" id="message-text" class="validate" placeholder="Message" />
-      </div>
-      <button type="submit" class="btn-large">Send
-        <i class="small material-icons right">send</i></button>
+<body class="chat">
+  <div class="chat__sidebar">
+    <h3>People</h3>
+    <div id="users"></div>
   </div>
-  </form>
-  <button class="btn large" id="send-location">Send Location</button>
+
+  <div class="chat__main">
+    <ul class="chat__messages" id="messages"></ul> <!-- chat__massages -->
+
+    <div class="chat__footer">
+      <form id="message-form">
+        <label for="message-text"></label>
+        <input autofocus autocomplete="off" type="text" name="message-text" id="message-text" class="validate"
+          placeholder="Message" />
+
+        <button type="submit">Send
+          <i class="small material-icons right">send</i></button>
+      </form>
+      <button id="send-location">Send Location</button>
+    </div>
+  </div>
+
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/index.js"></script>

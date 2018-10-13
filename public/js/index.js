@@ -35,14 +35,16 @@ var form = document.getElementById("message-form");
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
+  var textMessage = document.getElementById("message-text");
+
   socket.emit(
     "newMessage",
     {
       from: "User",
-      text: document.getElementById("message-text").value
+      text: textMessage.value
     },
     function() {
-      console.log("success");
+      textMessage.value = "";
     }
   );
 });
@@ -52,8 +54,11 @@ locationButton.addEventListener("click", function() {
   if (!navigator.geolocation) {
     return alert("Location not supported in this browser.");
   }
+  locationButton.setAttribute("disabled", "");
+
   navigator.geolocation.getCurrentPosition(
     function(position) {
+      locationButton.removeAttribute("disabled");
       socket.emit(
         "sendLocation",
         {
@@ -61,11 +66,12 @@ locationButton.addEventListener("click", function() {
           longitude: position.coords.longitude
         },
         function() {
-          console.log("success send location");
+          locationButton.removeAttribute("disabled");
         }
       );
     },
     function(error) {
+      locationButton.removeAttribute("disabled");
       alert("We cant get location data.");
     }
   );
