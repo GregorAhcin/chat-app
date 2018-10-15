@@ -9,22 +9,28 @@ socket.on("disconnect", function() {
 });
 
 socket.on("newMessage", function(message) {
+  var formatedTime = moment(message.createdAt).format("h:mm");
   var li = document.createElement("li");
   li.className = "collection-item";
-  var liText = document.createTextNode(message.from + ": " + message.text);
+  var liText = document.createTextNode(
+    formatedTime + ": " + message.from + ": " + message.text
+  );
   li.appendChild(liText);
 
   document.getElementById("messages").appendChild(li);
 });
 
 socket.on("newLocationMessage", function(message) {
+  var formatedTime = moment(message.createdAt).format("h:mm");
   var li = document.createElement("li");
   li.className = "collection-item grey lighten-3";
   var a = document.createElement("a");
   a.href = message.url;
   a.target = "_blank";
   var aText = document.createTextNode("Link to my location.");
-  var liText = document.createTextNode(message.from + ": ");
+  var liText = document.createTextNode(
+    formatedTime + ": " + message.from + ": "
+  );
   li.appendChild(liText);
   a.appendChild(aText);
   li.appendChild(a);
