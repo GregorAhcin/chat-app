@@ -10,31 +10,54 @@ socket.on("disconnect", function() {
 
 socket.on("newMessage", function(message) {
   var formatedTime = moment(message.createdAt).format("h:mm");
-  var li = document.createElement("li");
-  li.className = "collection-item";
-  var liText = document.createTextNode(
-    formatedTime + ": " + message.from + ": " + message.text
-  );
-  li.appendChild(liText);
 
-  document.getElementById("messages").appendChild(li);
+  var template = document.getElementById("message-template").innerHTML;
+  var html = Mustache.render(template, {
+    text: message.text,
+    from: message.from,
+    createdAt: formatedTime
+  });
+  var span = document.createElement("span");
+  span.innerHTML = html;
+
+  document.getElementById("messages").appendChild(span);
+
+  // var li = document.createElement("li");
+  // li.className = "collection-item";
+  // var liText = document.createTextNode(
+  //   formatedTime + ": " + message.from + ": " + message.text
+  // );
+  // li.appendChild(liText);
+
+  // document.getElementById("messages").appendChild(li);
 });
 
 socket.on("newLocationMessage", function(message) {
   var formatedTime = moment(message.createdAt).format("h:mm");
-  var li = document.createElement("li");
-  li.className = "collection-item grey lighten-3";
-  var a = document.createElement("a");
-  a.href = message.url;
-  a.target = "_blank";
-  var aText = document.createTextNode("Link to my location.");
-  var liText = document.createTextNode(
-    formatedTime + ": " + message.from + ": "
-  );
-  li.appendChild(liText);
-  a.appendChild(aText);
-  li.appendChild(a);
-  document.getElementById("messages").appendChild(li);
+
+  var template = document.getElementById("location-message-template").innerHTML;
+  var html = Mustache.render(template, {
+    from: message.from,
+    url: message.url,
+    createdAt: formatedTime
+  });
+  let span = document.createElement("span");
+  span.innerHTML = html;
+
+  document.getElementById("messages").appendChild(span);
+  // var li = document.createElement("li");
+  // li.className = "collection-item grey lighten-3";
+  // var a = document.createElement("a");
+  // a.href = message.url;
+  // a.target = "_blank";
+  // var aText = document.createTextNode("Link to my location.");
+  // var liText = document.createTextNode(
+  //   formatedTime + ": " + message.from + ": "
+  // );
+  // li.appendChild(liText);
+  // a.appendChild(aText);
+  // li.appendChild(a);
+  // document.getElementById("messages").appendChild(li);
 });
 
 var form = document.getElementById("message-form");
