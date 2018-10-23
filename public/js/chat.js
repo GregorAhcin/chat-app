@@ -1,5 +1,18 @@
 let socket = io();
 
+function deparam() {
+  var pairsArray = window.location.search.substring(1).split("&");
+  var obj = {};
+  var pair, i;
+
+  for (i in pairsArray) {
+    if (pairsArray[i] === "") continue;
+    pair = pairsArray[i].split("=");
+    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+  }
+  return obj;
+}
+
 function scrollToBottom() {
   // Selectors
   var messages = document.getElementById("messages");
@@ -17,7 +30,16 @@ function scrollToBottom() {
 }
 
 socket.on("connect", function() {
-  console.log("Connected to server.");
+  var params = deparam();
+
+  socket.emit("join", params, function(err) {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log("hey");
+    }
+  });
 });
 
 socket.on("disconnect", function() {
